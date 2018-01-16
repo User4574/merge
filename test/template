@@ -2,6 +2,7 @@ the date is <%= @date %>
 a thing is <%= @athing %>
 another thing is <%= @anotherthing %>
 unix is <%= Time.now.to_i %>
+an array is <%= @anarray %>
 <% if @anarray then %>
 <% for item in @anarray %>
 an item is <%= item %>

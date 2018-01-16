@@ -7,7 +7,7 @@ require 'erb'
 
 class Array
   def to_s
-    return self.join(", ")
+    return self[0..-2].join(", ") + ", and " + self[-1]
   end
 end
 
