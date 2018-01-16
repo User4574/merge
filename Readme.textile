@@ -1,0 +1,7 @@
+h1. Simple Mail Merger
+
+It's a simple mail merger, taking an ERB template and a JSON file with the merge data.
+
+h2. Docs
+
+Coming... maybe.

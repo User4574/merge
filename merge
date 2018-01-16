@@ -1,0 +1,68 @@
+#!/usr/bin/env ruby
+
+require 'json'
+require 'fileutils'
+require 'optparse'
+require 'erb'
+
+class Array
+  def to_s
+    return self.join(", ")
+  end
+end
+
+class Merge
+  def initialize(local, group, global)
+    group = {} if group.nil?
+    global = {} if global.nil?
+    data = global.merge(group).merge(local)
+    data.each do |key, value|
+      instance_variable_set("@#{key}", value)
+    end
+  end
+
+  def get_binding
+    return binding
+  end
+end
+
+options = {
+  datafile: "data.json",
+}
+
+OptionParser.new do |opts|
+  opts.on("-d", "--data-file", "=MANDATORY", "JSON data file") do |f|
+    options[:datafile] = f
+  end
+  opts.on("-t", "--template-file", "=MANDATORY", "Template file") do |f|
+    options[:tmplfile] = f
+  end
+  opts.on("-o", "--output-dir", "=MANDATORY", "Output Directory") do |d|
+    options[:outptdir] = d
+  end
+end.parse!
+
+DATA = JSON.parse(File.read(options[:datafile]))
+
+options[:tmplfile] = DATA["template file"]    || "template" unless options[:tmplfile]
+options[:outptdir] = DATA["output directory"] || "output"   unless options[:outptdir]
+
+TEMPLATE = File.read(options[:tmplfile])
+
+FileUtils.rm_rf(options[:outptdir]) if Dir.exists?(options[:outptdir])
+Dir.mkdir(options[:outptdir])
+
+DATA["merge"].each do |merge|
+  next unless merge["enable"] || merge["enable"].nil?
+
+  f = File.new(File.join(options[:outptdir], "#{merge[DATA["id field"]]}"), "w")
+  renderer = ERB.new(TEMPLATE, DATA["template isolation"] || 0, DATA["newline supression"] || '<>')
+
+  this = Merge.new(merge, DATA["groups"][merge["group"]], DATA["global"])
+
+  output = renderer.result(this.get_binding)
+
+  f.puts output
+  f.flush
+  f.close
+end

@@ -1,0 +1,41 @@
+{
+  "id field": "id",
+  "output directory": "files",
+  "global": {
+    "date": "THE DATE WILL BE",
+    "athing": 17
+  },
+  "groups": {
+    "a group": {
+      "athing": "OVER",
+      "anotherthing": "another group"
+    }
+  },
+  "merge": [
+    {
+      "enable": false,
+      "id": 1,
+      "anotherthing": true
+    },
+    {
+      "id": 2,
+      "anotherthing": "hello",
+      "anarray": [
+        "one",
+        "two",
+        "three"
+      ]
+    },
+    {
+      "id": 3,
+      "anotherthing": "goodbye",
+      "athing": "OVERRIDE"
+    },
+    {
+      "id": 4,
+      "group": "a group",
+      "athing": "local a thing",
+      "date": "tomorrow"
+    }
+  ]
+}

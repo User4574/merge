@@ -1,0 +1,9 @@
+the date is <%= @date %>
+a thing is <%= @athing %>
+another thing is <%= @anotherthing %>
+unix is <%= Time.now.to_i %>
+<% if @anarray then %>
+<% for item in @anarray %>
+an item is <%= item %>
+<% end %>
+<% end %>
