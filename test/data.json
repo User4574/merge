@@ -29,7 +29,11 @@
     {
       "id": 3,
       "anotherthing": "goodbye",
-      "athing": "OVERRIDE"
+      "athing": "OVERRIDE",
+      "anarray": [
+        "one",
+        "two"
+      ]
     },
     {
       "id": 4,
